@@ -17,8 +17,30 @@ struct Node* createNode(int data) {
 
 // Function to rotate the linked list to the left by k positions
 struct Node* rotateLeft(struct Node* head, int k) {
-    // TODO: Implement the rotation logic here
-    return head;
+    int len = 1;
+    struct Node* temp = head;
+    while (temp->next) {
+        len++;
+        temp = temp->next;
+    }
+    
+    // Handle k >= len by taking modulo
+    k %= len;
+    if (k == 0) return head;
+    
+    // Find the (k-1)th node
+    struct Node* curr = head;
+    for (int i = 1; i < k; i++) {
+        curr = curr->next;
+    }
+    
+    // curr is now the (k-1)th node
+    struct Node* new_head = curr->next;
+    curr->next = NULL;
+    
+    // Connect the end of the list to the original head
+    temp->next = head;
+    return new_head;
 }
 
 // Function to print the linked list
